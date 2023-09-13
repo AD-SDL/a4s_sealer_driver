@@ -63,7 +63,7 @@ async def about():
     global sealer, state
     return JSONResponse(content={"name": "sealer",
  "model": "a4s_sealer",
- "version: "0.0.1",
+ "version": "0.0.1",
  "actions": {
              "seal": "config : %s",  
              },
