@@ -110,7 +110,7 @@ def do_action(
    
 
 if __name__ == "__main__":
- parser = ArgumentParser()
+    parser = ArgumentParser()
     parser.add_argument("--alias", type=str, help="Name of the Node")
     parser.add_argument("--host", type=str, help="Host for rest")
     parser.add_argument("--port", type=int, help="port value")
