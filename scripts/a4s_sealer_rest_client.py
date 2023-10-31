@@ -62,13 +62,13 @@ def get_state():
 async def about():
     global sealer, state
     return JSONResponse(content={"name": "sealer",
- "model": "a4s_sealer",
- "version": "0.0.1",
- "actions": {
-             "seal": "config : %s",  
-             },
-"repo": "https://github.com/AD-SDL/a4s_sealer_rest_node/edit/main/a4s_sealer_client.py"
- })#sealer.get_status() })
+        "model": "a4s_sealer",
+        "version": "0.0.1",
+        "actions": {
+                    "seal": "config : %s",  
+                    },
+        "repo": "https://github.com/AD-SDL/a4s_sealer_rest_node/edit/main/a4s_sealer_client.py"
+        })#sealer.get_status() })
 
 @app.get("/resources")
 async def resources():
@@ -92,19 +92,18 @@ def do_action(
             sealer.seal()
             time.sleep(15)  
             response_content = {
-                    "action_msg": "StepStatus.Succeeded",
-                    "action_response": "True",
+                    "action_msg": "Sealing successful",
+                    "action_response": "succeeded",
                     "action_log": ""
-                    
-                    
                 }
             state = "IDLE"
             return JSONResponse(content=response_content)
         except Exception as e:
             response_content = {
-            "status": "failed",
-            "error": str(e),
-        }
+                "action_msg": "",
+                "action_response": "failed",
+                "action_log": str(e)
+            }
             state = "IDLE"
             return JSONResponse(content=response_content)
    
