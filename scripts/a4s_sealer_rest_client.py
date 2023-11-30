@@ -8,13 +8,15 @@ from fastapi.responses import JSONResponse
 
 from a4s_sealer_driver.a4s_sealer_driver import (
     A4S_SEALER_DRIVER,
-)  # import sealer driver
+)
 
-workcell = None
 global sealer, state
-serial_port = "/dev/ttyUSB1"
-local_ip = "parker.alcf.anl.gov"
-local_port = "8000"
+
+parser = ArgumentParser()
+parser.add_argument("--host", type=str, default="0.0.0.0", help="Hostname that the REST API will be accessible on")
+parser.add_argument("--port", type=int, default=2000)
+parser.add_argument("--device", type=str, default="/dev/ttyUSB1", help="Serial device for communicating with the device")
+args = parser.parse_args()
 
 
 @asynccontextmanager
@@ -30,7 +32,7 @@ async def lifespan(app: FastAPI):
         -------
         None"""
     try:
-        sealer = A4S_SEALER_DRIVER(serial_port)
+        sealer = A4S_SEALER_DRIVER(args.device)
         state = "IDLE"
     except Exception as err:
         print(err)
@@ -120,15 +122,9 @@ def do_action(
 if __name__ == "__main__":
     import uvicorn
 
-    parser = ArgumentParser()
-    parser.add_argument("--alias", type=str, help="Name of the Node")
-    parser.add_argument("--host", type=str, help="Host for rest")
-    parser.add_argument("--port", type=int, help="port value")
-    args = parser.parse_args()
     uvicorn.run(
         "a4s_sealer_rest_client:app",
         host=args.host,
         port=args.port,
         reload=False,
-        ws_max_size=100000000000000000000000000000000000000,
     )
