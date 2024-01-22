@@ -5,6 +5,16 @@ from contextlib import asynccontextmanager
 import time
 from fastapi import FastAPI, File, Form, UploadFile
 from fastapi.responses import JSONResponse
+from pathlib import Path
+from wei.core.data_classes import (
+    ModuleAbout,
+    ModuleAction,
+    ModuleActionArg,
+    ModuleStatus,
+    StepResponse,
+    StepStatus,
+)
+from wei.helpers import extract_version
 
 from a4s_sealer_driver.a4s_sealer_driver import (
     A4S_SEALER_DRIVER,
@@ -66,19 +76,37 @@ def get_state():
 
 
 @app.get("/about")
-async def about():
+async def about() -> JSONResponse:
+    """Returns a description of the actions and resources the module supports"""
     global sealer, state
-    return JSONResponse(
-        content={
-            "name": "sealer",
-            "model": "a4s_sealer",
-            "version": "0.0.1",
-            "actions": {
-                "seal": "config : %s",
-            },
-            "repo": "https://github.com/AD-SDL/a4s_sealer_rest_node/edit/main/a4s_sealer_client.py",
-        }
-    )  # sealer.get_status() })
+    about = ModuleAbout(
+        name="Sealer Robot",
+        description="Sealer is a robot module that can seal plates.",
+        interface="wei_rest_node",
+        version=extract_version(Path(__file__).parent.parent / "pyproject.toml"),
+        actions=[
+            ModuleAction(
+                name="seal",
+                description="This action seals a plate that is currenly in the sealer robot.",
+                args=[
+                    ModuleActionArg(
+                        name="time",
+                        description="The amount of time for sealing a plate.",
+                        type="int",
+                        required=True,
+                    ), 
+                    ModuleActionArg(
+                        name="temperature",
+                        description="The temperature to heat the plate to when sealing it.", 
+                        type="int", 
+                        required=True
+                    )
+                ],
+            )
+        ],
+        resource_pools=[],
+    )
+    return JSONResponse(content=about.model_dump(mode="json"))
 
 
 @app.get("/resources")
