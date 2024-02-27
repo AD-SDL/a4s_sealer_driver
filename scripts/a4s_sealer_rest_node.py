@@ -151,7 +151,7 @@ if __name__ == "__main__":
     import uvicorn
 
     uvicorn.run(
-        "a4s_sealer_rest_client:app",
+        "a4s_sealer_rest_node:app",
         host=args.host,
         port=args.port,
         reload=False,
