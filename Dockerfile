@@ -1,24 +1,24 @@
 FROM ghcr.io/ad-sdl/wei
 
-LABEL org.opencontainers.image.source=https://github.com/AD-SDL/pf400_module
-LABEL org.opencontainers.image.description="Drivers and REST API's for the PF400 plate handler robots"
+LABEL org.opencontainers.image.source=https://github.com/AD-SDL/a4s_sealer_module.git
+LABEL org.opencontainers.image.description="Drivers and REST API's for the a4s sealer"
 LABEL org.opencontainers.image.licenses=MIT
 
 #########################################
 # Module specific logic goes below here #
 #########################################
 
-RUN mkdir -p pf400_module
+RUN mkdir -p a4s_sealer_module
 
-COPY ./pf400_driver pf400_module/pf400_driver
-COPY ./scripts pf400_module/scripts
-COPY ./README.md pf400_module/README.md
-COPY ./pyproject.toml pf400_module/pyproject.toml
-# COPY ./tests pf400_module/tests
+COPY ./a4s_sealer_driver a4s_sealer_module/a4s_sealer_driver
+COPY ./scripts a4s_sealer_module/scripts
+COPY ./README.md a4s_sealer_module/README.md
+COPY ./pyproject.toml a4s_sealer_module/pyproject.toml
+# COPY ./tests a4s_sealer_module/tests
 
 RUN --mount=type=cache,target=/root/.cache \
-    pip install -e ./pf400_module
+    pip install -e ./a4s_sealer_module
 
-CMD ["python", "pf400_module/scripts/pf400_rest_node.py"]
+CMD ["python", "a4s_sealer_module/scripts/a4s_sealer_rest_node.py"]
 
 #########################################
