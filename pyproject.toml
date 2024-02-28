@@ -1,7 +1,7 @@
 [project]
-name = "pf400_module"
+name = "a4s_sealer_module"
 version = "0.2.0"
-description = "Software for automatting a PF400 robot"
+description = "Software for automatting a a4s sealer"
 authors = [
     {name = "Ryan D. Lewis", email="ryan.lewis@anl.gov"},
     {name = "Rafael Vescovi", email="ravescovi@anl.gov"},
@@ -24,7 +24,7 @@ readme = "README.md"
 license = {text = "MIT"}
 
 [project.urls]
-homepage = "https://github.com/AD-SDL/pf400_module"
+homepage = "https://github.com/AD-SDL/a4s_sealer_module"
 
 [project.optional-dependencies]
 docs = [
@@ -42,11 +42,11 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["scripts*", "pf400_driver*"]
+include = ["scripts*", "a4s_sealer_driver*"]
 exclude = ["*tests*", "scripts*"]
 
 [tool.setuptools.package-data]
-pf400_module = ["*.template"]
+a4s_sealer_module = ["*.template"]
 
 #####################
 # Development Tools #
