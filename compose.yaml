@@ -10,11 +10,11 @@ services:
         - ${IMAGE}:latest
         - ${IMAGE}:${PROJECT_VERSION}
         - ${IMAGE}:dev
-    command: python a4s_sealer_module/scripts/a4s_sealer_rest_node.py --port 3000 --pf400_ip ${PF400_IP} --pf400_port ${PF400_PORT}
+    command: python a4s_sealer_module/scripts/a4s_sealer_rest_node.py --port 3001 --device ${A4S_DEVICE} 
     privileged: true
     env_file: .env
     volumes:
       - ./scripts:/home/app/a4s_sealer_module/scripts
       - ./tests:/home/app/a4s_sealer_module/tests
     ports:
-      - 3000:3000
+      - 3001:3001
