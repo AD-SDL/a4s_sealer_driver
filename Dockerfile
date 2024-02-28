@@ -14,7 +14,7 @@ COPY ./a4s_sealer_driver a4s_sealer_module/a4s_sealer_driver
 COPY ./scripts a4s_sealer_module/scripts
 COPY ./README.md a4s_sealer_module/README.md
 COPY ./pyproject.toml a4s_sealer_module/pyproject.toml
-# COPY ./tests a4s_sealer_module/tests
+COPY ./tests a4s_sealer_module/tests
 
 RUN --mount=type=cache,target=/root/.cache \
     pip install -e ./a4s_sealer_module
