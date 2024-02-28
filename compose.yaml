@@ -1,0 +1,20 @@
+name: a4s_sealer_module
+services:
+  a4s_sealer_module:
+    container_name: a4s_sealer_module
+    image: ${IMAGE}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      tags:
+        - ${IMAGE}:latest
+        - ${IMAGE}:${PROJECT_VERSION}
+        - ${IMAGE}:dev
+    command: python a4s_sealer_module/scripts/a4s_sealer_rest_node.py --port 3001 --device ${A4S_DEVICE} 
+    privileged: true
+    env_file: .env
+    volumes:
+      - ./scripts:/home/app/a4s_sealer_module/scripts
+      - ./tests:/home/app/a4s_sealer_module/tests
+    ports:
+      - 3001:3001
