@@ -58,7 +58,7 @@ app = FastAPI(
 def get_state():
     global sealer, state
     if state != "BUSY":
-        sealer.get_status()
+        sealer.get_status() 
         if sealer.status_msg == 3:
             # msg.data = "State: ERROR"
             state = "ERROR"
