@@ -21,17 +21,11 @@ from a4s_sealer_driver.a4s_sealer_driver import (
 )
 
 global sealer, state
-
-parser = ArgumentParser()
-parser.add_argument("--host", type=str, default="0.0.0.0", help="Hostname that the REST API will be accessible on")
-parser.add_argument("--port", type=int, default=2000)
-parser.add_argument("--device", type=str, default="/dev/ttyUSB1", help="Serial device for communicating with the device")
-args = parser.parse_args()
-
+device = ""
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    global sealer, state
+    global sealer, state, device
     """Initial run function for the app, parses the worcell argument
         Parameters
         ----------
@@ -42,7 +36,7 @@ async def lifespan(app: FastAPI):
         -------
         None"""
     try:
-        sealer = A4S_SEALER_DRIVER(args.device)
+        sealer = A4S_SEALER_DRIVER(device)
         state = "IDLE"
     except Exception as err:
         print(err)
@@ -66,7 +60,7 @@ def get_state():
     if state != "BUSY":
         sealer.get_status()
         if sealer.status_msg == 3:
-            msg.data = "State: ERROR"
+            # msg.data = "State: ERROR"
             state = "ERROR"
 
         elif sealer.status_msg == 0:
@@ -149,6 +143,12 @@ def do_action(
 
 if __name__ == "__main__":
     import uvicorn
+    parser = ArgumentParser()
+    parser.add_argument("--host", type=str, default="0.0.0.0", help="Hostname that the REST API will be accessible on")
+    parser.add_argument("--port", type=int, default=3001)
+    parser.add_argument("--device", type=str, default="/dev/ttyUSB1", help="Serial device for communicating with the device")
+    args = parser.parse_args()
+    device = args.device
 
     uvicorn.run(
         "a4s_sealer_rest_node:app",
