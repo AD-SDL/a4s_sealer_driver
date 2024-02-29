@@ -1,4 +1,5 @@
 """The server that takes incoming WEI flow requests from the experiment application"""
+
 import json
 from argparse import ArgumentParser
 from contextlib import asynccontextmanager
@@ -22,6 +23,7 @@ from a4s_sealer_driver.a4s_sealer_driver import (
 
 global sealer, state
 device = ""
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -58,9 +60,8 @@ app = FastAPI(
 def get_state():
     global sealer, state
     if state != "BUSY":
-        sealer.get_status() 
+        sealer.get_status()
         if sealer.status_msg == 3:
-            # msg.data = "State: ERROR"
             state = "ERROR"
 
         elif sealer.status_msg == 0:
@@ -88,13 +89,13 @@ async def about() -> JSONResponse:
                         description="The amount of time for sealing a plate.",
                         type="int",
                         required=True,
-                    ), 
+                    ),
                     ModuleActionArg(
                         name="temperature",
-                        description="The temperature to heat the plate to when sealing it.", 
-                        type="int", 
-                        required=True
-                    )
+                        description="The temperature to heat the plate to when sealing it.",
+                        type="int",
+                        required=True,
+                    ),
                 ],
             )
         ],
@@ -143,10 +144,21 @@ def do_action(
 
 if __name__ == "__main__":
     import uvicorn
+
     parser = ArgumentParser()
-    parser.add_argument("--host", type=str, default="0.0.0.0", help="Hostname that the REST API will be accessible on")
+    parser.add_argument(
+        "--host",
+        type=str,
+        default="0.0.0.0",
+        help="Hostname that the REST API will be accessible on",
+    )
     parser.add_argument("--port", type=int, default=3001)
-    parser.add_argument("--device", type=str, default="/dev/ttyUSB1", help="Serial device for communicating with the device")
+    parser.add_argument(
+        "--device",
+        type=str,
+        default="/dev/ttyUSB1",
+        help="Serial device for communicating with the device",
+    )
     args = parser.parse_args()
     device = args.device
 
