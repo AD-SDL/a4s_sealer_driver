@@ -21,8 +21,26 @@ from a4s_sealer_driver.a4s_sealer_driver import (
     A4S_SEALER_DRIVER,
 )
 
-global sealer, state
-device = ""
+
+parser = ArgumentParser()
+parser.add_argument(
+    "--host",
+    type=str,
+    default="0.0.0.0",
+    help="Hostname that the REST API will be accessible on",
+)
+parser.add_argument("--port", type=int, default=3001)
+parser.add_argument(
+    "--device",
+    type=str,
+    default="/dev/ttyUSB2",
+    help="Serial device for communicating with the device",
+)
+args = parser.parse_args()
+
+global sealer, state, device
+
+device = args.device
 
 
 @asynccontextmanager
@@ -115,14 +133,12 @@ def do_action(
     action_handle: str,
     action_vars: str,
 ):
-
     global sealer, state
     state = "BUSY"
     if action_handle == "seal":
         # self.sealer.set_time(3)
         # self.sealer.set_temp(175)
         try:
-
             sealer.seal()
             time.sleep(15)
             response_content = {
@@ -145,26 +161,9 @@ def do_action(
 if __name__ == "__main__":
     import uvicorn
 
-    parser = ArgumentParser()
-    parser.add_argument(
-        "--host",
-        type=str,
-        default="0.0.0.0",
-        help="Hostname that the REST API will be accessible on",
-    )
-    parser.add_argument("--port", type=int, default=3001)
-    parser.add_argument(
-        "--device",
-        type=str,
-        default="/dev/ttyUSB1",
-        help="Serial device for communicating with the device",
-    )
-    args = parser.parse_args()
-    device = args.device
-
     uvicorn.run(
         "a4s_sealer_rest_node:app",
         host=args.host,
         port=args.port,
-        reload=False,
+        reload=True,
     )
