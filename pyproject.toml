@@ -6,8 +6,6 @@ authors = [
     {name = "Ryan D. Lewis", email="ryan.lewis@anl.gov"},
     {name = "Rafael Vescovi", email="ravescovi@anl.gov"},
     {name = "Doga Ozgulbas", email="dozgulbas@anl.gov"},
-    {name = "Abe Stroka", email="astroka@anl.gov"},
-    {name = "Kyle Hippe", email = "khippe@anl.gov"},
     {name = "Tobias Ginsburg", email = "tginsburg@anl.gov"},
 ]
 dependencies = [
@@ -16,7 +14,6 @@ dependencies = [
     "pyyaml>=6.0.1",
     "fastapi>=0.103.2",
     "requests>=2.31.0",
-    "pandas>=2.2.0",
     "uvicorn>=0.21.1",
     "pyserial>=3.5"
 ]
@@ -26,13 +23,6 @@ license = {text = "MIT"}
 
 [project.urls]
 homepage = "https://github.com/AD-SDL/a4s_sealer_module"
-
-[project.optional-dependencies]
-docs = [
-    "autodoc-pydantic",
-    "sphinx",
-    "sphinx-rtd-theme",
-]
 
 ######################
 # Build Info + Tools #

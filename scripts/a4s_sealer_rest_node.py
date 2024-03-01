@@ -4,16 +4,13 @@ import json
 from argparse import ArgumentParser
 from contextlib import asynccontextmanager
 import time
-from fastapi import FastAPI, File, Form, UploadFile
+from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from pathlib import Path
 from wei.core.data_classes import (
     ModuleAbout,
     ModuleAction,
     ModuleActionArg,
-    ModuleStatus,
-    StepResponse,
-    StepStatus,
 )
 from wei.helpers import extract_version
 
