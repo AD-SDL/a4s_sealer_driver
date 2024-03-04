@@ -10,8 +10,7 @@ LABEL org.opencontainers.image.licenses=MIT
 
 RUN mkdir -p a4s_sealer_module
 
-COPY ./a4s_sealer_driver a4s_sealer_module/a4s_sealer_driver
-COPY ./scripts a4s_sealer_module/scripts
+COPY ./src a4s_sealer_module/src
 COPY ./README.md a4s_sealer_module/README.md
 COPY ./pyproject.toml a4s_sealer_module/pyproject.toml
 COPY ./tests a4s_sealer_module/tests
@@ -21,4 +20,5 @@ RUN --mount=type=cache,target=/root/.cache \
 
 CMD ["python", "a4s_sealer_module/scripts/a4s_sealer_rest_node.py"]
 
+RUN usermod -aG dialout app
 #########################################

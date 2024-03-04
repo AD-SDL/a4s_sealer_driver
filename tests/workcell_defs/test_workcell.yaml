@@ -10,7 +10,7 @@ config:
 #List of all components accessible in this workcell
 modules:
 
-  - name: a4s_sealer
+  - name: a4s_sealer_module
     model: A4S Sealer
     interface: wei_rest_node
     config:

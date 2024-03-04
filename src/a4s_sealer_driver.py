@@ -1,13 +1,9 @@
-from ast import Pass
-import os.path
-import time
-import serial
-import logging
-import re
+"""Python Driver for controlling the A4S Sealer instrument"""
 
-# Log Configuration
-# file_path = os.path.join(os.path.split(os.path.dirname(__file__))[0]  + '/sealer_logs/sealer_logs.log')
-# logging.basicConfig(filename = file_path, level=logging.DEBUG, format = '[%(levelname)s] [%(asctime)s] [%(name)s] %(message)s', datefmt = '%Y-%m-%d %H:%M:%S')
+import re
+import time
+
+import serial
 
 
 class A4S_SEALER_DRIVER:
@@ -39,8 +35,8 @@ class A4S_SEALER_DRIVER:
 
         try:
             self.connection = serial.Serial(self.host_path, self.baud_rate)
-        except:
-            raise Exception("Could not establish connection")
+        except Exception as e:
+            raise Exception("Could not establish connection") from e
 
     def get_status(self, time_wait=500):
         """
@@ -87,9 +83,6 @@ class A4S_SEALER_DRIVER:
                 break
 
         return response_buffer
-
-    def get_error(self):
-        pass
 
     def reset(self):
         """

@@ -1,7 +1,7 @@
 name: Test a4s_sealer_module Module
 metadata:
   author: Doga Ozgulbas
-  info: Tests the functionality of the a4s_sealer Module
+  info: Tests the functionality of the brooks_xpeel  Module
   version: 0.1
 
 modules:
@@ -10,7 +10,5 @@ modules:
 flowdef:
   - name: Transfer
     module: a4s_sealer_module
-    action: seal
-    args:
-      time: payload:seal.time
-      temperature: 175
+    action: peel
+    args: {}
