@@ -1,11 +1,14 @@
 """REST-based node for A4S Sealer device"""
 import datetime
+import time
 from pathlib import Path
 
 from a4s_sealer_driver import A4S_SEALER_DRIVER
 from fastapi.datastructures import State
 from wei.modules.rest_module import RESTModule
-from wei.utils import ModuleState, ModuleStatus, extract_version
+from wei.types.module_types import ModuleState, ModuleStatus
+from wei.types.step_types import ActionRequest, StepResponse, StepStatus
+from wei.utils import extract_version
 
 rest_module = RESTModule(
     name="sealer_node",
@@ -41,6 +44,20 @@ def state(state: State):
             state.status = ModuleStatus.IDLE
 
     return ModuleState(status=state.status, error="")
+
+
+@rest_module.action(
+    name="seal",
+    description="Executes a sealing cycle on the Sealer device",
+)
+def seal(state: State, action: ActionRequest) -> StepResponse:
+    """
+    Seal a plate
+    """
+    state.sealer.seal()
+    time.sleep(15)
+
+    return StepResponse(action_msg="Sealing successful", action_response=StepStatus.SUCCEEDED)
 
 
 if __name__ == "__main__":
