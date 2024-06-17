@@ -27,6 +27,7 @@ rest_module.arg_parser.add_argument(
 @rest_module.startup()
 def sealer(state: State):
     """Sealer startup handler."""
+    state.sealer = None
     state.sealer = A4S_SEALER_DRIVER(state.device)
     print("Sealer online")
 
