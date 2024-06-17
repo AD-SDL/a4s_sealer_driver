@@ -122,9 +122,7 @@ def do_action(
             sealer.seal()
             time.sleep(15)
             state = ModuleStatus.IDLE
-            return StepResponse(
-                action_msg="Sealing successful", action_response=StepStatus.SUCCEEDED
-            )
+            return StepResponse(action_msg="Sealing successful", action_response=StepStatus.SUCCEEDED)
         except Exception as e:
             state = ModuleStatus.IDLE
             return StepResponse(

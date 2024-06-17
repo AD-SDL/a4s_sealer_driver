@@ -48,9 +48,7 @@ class A4S_SEALER_DRIVER:
             if self.connection.in_waiting != 0:
                 response = self.connection.read_until(expected=b"!")
                 response_string = response.decode("utf-8")
-                response_string_pat = re.search(
-                    r"=\d+,(\d+),(\d+),\d+,\d+,\d+", response_string
-                )
+                response_string_pat = re.search(r"=\d+,(\d+),(\d+),\d+,\d+,\d+", response_string)
                 if response_string_pat:
                     self.status_msg = int(response_string_pat[1])
                     self.heat = int(response_string_pat[2])
