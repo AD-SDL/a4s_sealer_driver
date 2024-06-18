@@ -20,5 +20,5 @@ RUN --mount=type=cache,target=/root/.cache \
 
 CMD ["python", "a4s_sealer_module/scripts/a4s_sealer_rest_node.py"]
 
-# RUN usermod -aG dialout app
+RUN usermod -aG dialout app
 #########################################
