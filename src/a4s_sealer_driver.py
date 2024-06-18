@@ -14,7 +14,7 @@ class A4S_SEALER_DRIVER:
                  - Responses begin with a "0" if the command was successful, or a negative error code number
     """
 
-    def __init__(self, host_path:str="", baud_rate:int=19200):
+    def __init__(self, host_path: str = "/dev/ttyUSB2", baud_rate: int = 19200):
         """
         This function initializes the data to be called and modified in other locations in the client.
         """
@@ -161,14 +161,13 @@ if __name__ == "__main__":
     sealer = A4S_SEALER_DRIVER("/dev/ttyUSB2")
     # sealer.reset()
     sealer.get_status()
-   
 
     print(sealer.status_msg)
     # sealer.reset()
     # sealer.close_gate()
     # time.sleep(5)
     # sealer.open_gate()
-    sealer.seal()
+    # sealer.seal()
     # sealer.get_status()
     # sealer.get_error()
     # dummy_seal.reset()
