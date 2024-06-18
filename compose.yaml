@@ -12,6 +12,7 @@ services:
     command: python -m a4s_sealer_rest_node --port 3001 --device ${A4S_DEVICE}
     env_file: .env
     volumes:
+      - /dev:/dev
       - ./src:/home/app/a4s_sealer_module/src
       - ./tests:/home/app/a4s_sealer_module/tests
     ports:
