@@ -21,6 +21,3 @@ test: init .env paths # Runs all the tests
 	@docker compose -f wei.compose.yaml --env-file .env up --build -d
 	@docker compose -f wei.compose.yaml --env-file .env exec a4s_sealer_module pytest -p no:cacheprovider -m "not hardware" a4s_sealer_module
 	@docker compose -f wei.compose.yaml --env-file .env down
-
-clean:
-	@rm .env
