@@ -23,11 +23,12 @@ rest_module.arg_parser.add_argument(
     help="Serial device for communicating with the device",
 )
 
+rest_module.state.sealer = None
+
 
 @rest_module.startup()
 def sealer(state: State):
     """Sealer startup handler."""
-    state.sealer = None
     state.sealer = A4S_SEALER_DRIVER(state.device)
     print("Sealer online")
 
@@ -44,7 +45,7 @@ def state(state: State):
         elif state.sealer.status_msg == 0:
             state.status = ModuleStatus.IDLE
 
-    return ModuleState(status=state.status, error="")
+    return ModuleState(status=state.status, error="", status_msg=state.sealer.status_msg)
 
 
 @rest_module.action(

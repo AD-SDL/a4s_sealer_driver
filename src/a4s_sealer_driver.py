@@ -36,7 +36,9 @@ class A4S_SEALER_DRIVER:
         try:
             self.connection = serial.Serial(self.host_path, self.baud_rate)
         except Exception as e:
-            raise Exception("Could not establish connection") from e
+            raise Exception(
+                "Could not establish connection, check that the device is connected and the correct USB serial device is selected."
+            ) from e
 
     def get_status(self, time_wait=500):
         """
@@ -52,7 +54,6 @@ class A4S_SEALER_DRIVER:
                 if response_string_pat:
                     self.status_msg = int(response_string_pat[1])
                     self.heat = int(response_string_pat[2])
-                    print("status = " + str(self.status_msg))
                 break
             else:
                 response_string = ""
@@ -77,8 +78,7 @@ class A4S_SEALER_DRIVER:
             response_buffer = response_buffer + response_msg
 
             if time.time() - ready_timer > 20:
-                print("timed out")
-                break
+                raise Exception(f"Timed out during {command}.")
 
         return response_buffer
 
