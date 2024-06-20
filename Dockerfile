@@ -1,7 +1,7 @@
 FROM ghcr.io/ad-sdl/wei
 
 LABEL org.opencontainers.image.source=https://github.com/AD-SDL/a4s_sealer_module.git
-LABEL org.opencontainers.image.description="Drivers and REST API's for the a4s sealer"
+LABEL org.opencontainers.image.description="Drivers and REST API's for the A4S Sealer"
 LABEL org.opencontainers.image.licenses=MIT
 
 #########################################

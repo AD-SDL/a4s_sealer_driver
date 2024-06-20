@@ -14,7 +14,7 @@ class A4S_SEALER_DRIVER:
                  - Responses begin with a "0" if the command was successful, or a negative error code number
     """
 
-    def __init__(self, host_path, baud_rate=19200):
+    def __init__(self, host_path: str = "/dev/ttyUSB2", baud_rate: int = 19200):
         """
         This function initializes the data to be called and modified in other locations in the client.
         """
@@ -36,7 +36,9 @@ class A4S_SEALER_DRIVER:
         try:
             self.connection = serial.Serial(self.host_path, self.baud_rate)
         except Exception as e:
-            raise Exception("Could not establish connection") from e
+            raise Exception(
+                "Could not establish connection, check that the device is connected and the correct USB serial device is selected."
+            ) from e
 
     def get_status(self, time_wait=500):
         """
@@ -48,13 +50,10 @@ class A4S_SEALER_DRIVER:
             if self.connection.in_waiting != 0:
                 response = self.connection.read_until(expected=b"!")
                 response_string = response.decode("utf-8")
-                response_string_pat = re.search(
-                    r"=\d+,(\d+),(\d+),\d+,\d+,\d+", response_string
-                )
+                response_string_pat = re.search(r"=\d+,(\d+),(\d+),\d+,\d+,\d+", response_string)
                 if response_string_pat:
                     self.status_msg = int(response_string_pat[1])
                     self.heat = int(response_string_pat[2])
-                    print("status = " + str(self.status_msg))
                 break
             else:
                 response_string = ""
@@ -79,8 +78,7 @@ class A4S_SEALER_DRIVER:
             response_buffer = response_buffer + response_msg
 
             if time.time() - ready_timer > 20:
-                print("timed out")
-                break
+                raise Exception(f"Timed out during {command}.")
 
         return response_buffer
 
@@ -161,12 +159,13 @@ if __name__ == "__main__":
     """
 
     sealer = A4S_SEALER_DRIVER("/dev/ttyUSB2")
+    # sealer.reset()
     sealer.get_status()
 
     print(sealer.status_msg)
     # sealer.reset()
     # sealer.close_gate()
-    time.sleep(5)
+    # time.sleep(5)
     # sealer.open_gate()
     # sealer.seal()
     # sealer.get_status()

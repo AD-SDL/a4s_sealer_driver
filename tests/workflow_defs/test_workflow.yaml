@@ -8,7 +8,7 @@ modules:
   - name: a4s_sealer_module
 
 flowdef:
-  - name: Transfer
+  - name: Seal a plate
     module: a4s_sealer_module
-    action: peel
-    args: {}
+    action: seal
+    # args: {}
