@@ -14,8 +14,9 @@ class TestImports(TestModule_Base):
 
     def test_driver_import(self):
         """Test the driver and rest node imports"""
-        import a4s_sealer_driver
         import a4s_sealer_rest_node
+
+        import a4s_sealer_driver
 
         assert a4s_sealer_driver
         assert a4s_sealer_rest_node

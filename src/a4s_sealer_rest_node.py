@@ -3,12 +3,13 @@ import datetime
 import time
 from pathlib import Path
 
-from a4s_sealer_driver import A4S_SEALER_DRIVER
 from fastapi.datastructures import State
 from wei.modules.rest_module import RESTModule
 from wei.types.module_types import ModuleState, ModuleStatus
-from wei.types.step_types import ActionRequest, StepResponse, StepStatus
+from wei.types.step_types import ActionRequest, StepResponse, StepSucceeded
 from wei.utils import extract_version
+
+from a4s_sealer_driver import A4S_SEALER_DRIVER
 
 rest_module = RESTModule(
     name="sealer_node",
@@ -59,7 +60,7 @@ def seal(state: State, action: ActionRequest) -> StepResponse:
     state.sealer.seal()
     time.sleep(15)
 
-    return StepResponse(action_msg="Sealing successful", action_response=StepStatus.SUCCEEDED)
+    return StepSucceeded()
 
 
 if __name__ == "__main__":
